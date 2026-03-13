@@ -1,6 +1,3 @@
-variable "pool_id" {
-    type = string 
-}
 variable "vm_name" {
     type = string
 }
@@ -38,4 +35,8 @@ variable "vm_user" {
 }
 variable "vm_password" {
     type = string 
+}
+
+variable "gateway" {
+    type = string
 }

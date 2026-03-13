@@ -18,38 +18,34 @@ provider "proxmox" {
   }
 }
 
-resource "proxmox_virtual_environment_pool" "abdellatif_pool" {
-  pool_id = var.pool_id
-}
-
 module "bdd" {
-  source       = "./modules/bdd"
-  pool_id      = proxmox_virtual_environment_pool.abdellatif_pool.pool_id
-  
+  source  = "./modules/bdd"
+
   vm_name      = var.bdd_vm_name
-  vm_node_name = var.vm_node_name 
+  vm_node_name = var.vm_node_name
   vm_id        = var.bdd_vm_id
   ram          = var.bdd_ram
   cpu_cores    = var.bdd_cpu_cores
-  
 
-  ip_address   = var.bdd_ip_address
-  vm_user      = var.vm_user
-  vm_password  = var.vm_password
+
+  ip_address  = var.bdd_ip_address
+  gateway     = var.bdd_gateway
+  vm_user     = var.vm_user
+  vm_password = var.vm_password
 }
 
 module "app" {
-  source       = "./modules/app"
-  depends_on   = [module.bdd]             
-  pool_id      = proxmox_virtual_environment_pool.abdellatif_pool.pool_id
-  
+  source     = "./modules/app"
+  depends_on = [module.bdd]
+
   vm_name      = var.app_vm_name
   vm_node_name = var.vm_node_name
   vm_id        = var.app_vm_id
   ram          = var.app_ram
   cpu_cores    = var.app_cpu_cores
-  
-  ip_address   = var.app_ip_address
-  vm_user      = var.vm_user
-  vm_password  = var.vm_password
+
+  ip_address  = var.app_ip_address
+  gateway     = var.app_gateway
+  vm_user     = var.vm_user
+  vm_password = var.vm_password
 }

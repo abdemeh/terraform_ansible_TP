@@ -8,7 +8,6 @@ terraform {
 }
 
 resource "proxmox_virtual_environment_vm" "app_vm" {
-  pool_id   = var.pool_id
   name      = var.vm_name
   node_name = var.vm_node_name
   vm_id     = var.vm_id
@@ -40,10 +39,14 @@ resource "proxmox_virtual_environment_vm" "app_vm" {
     user_account {
       username = var.vm_user
       password = var.vm_password
+      keys     = [
+        trimspace(file("~/.ssh/id_rsa.pub"))
+      ]
     }
     ip_config {
       ipv4 {
         address = var.ip_address
+        gateway = var.gateway
       }
     }
   }

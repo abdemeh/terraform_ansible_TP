@@ -1,21 +1,13 @@
 variable "proxmox_endpoint" {
   type        = string
-  description = "Proxmox pool ID"
 }
 
 variable "proxmox_user" {
   type        = string
-  description = "Proxmox pool ID"
 }
 
 variable "proxmox_password" {
   type        = string
-  description = "Proxmox pool ID"
-}
-
-variable "pool_id" {
-  type        = string
-  description = "Proxmox pool ID"
 }
 
 variable "vm_user" {
@@ -39,7 +31,7 @@ variable "vm_node_name" {
 }
 
 variable "bdd_vm_id" {
-  type    = number
+  type = number
 }
 
 variable "bdd_ram" {
@@ -53,7 +45,7 @@ variable "bdd_cpu_cores" {
 }
 
 variable "bdd_ip_address" {
-  type    = string
+  type = string
 }
 
 variable "app_vm_name" {
@@ -62,7 +54,7 @@ variable "app_vm_name" {
 }
 
 variable "app_vm_id" {
-  type    = number
+  type = number
 }
 
 variable "app_ram" {
@@ -76,5 +68,13 @@ variable "app_cpu_cores" {
 }
 
 variable "app_ip_address" {
-  type    = string
+  type = string
+}
+
+variable "app_gateway" {
+  type = string
+}
+
+variable "bdd_gateway" {
+  type = string
 }
