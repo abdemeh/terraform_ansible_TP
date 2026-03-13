@@ -1,0 +1,39 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for bdd
+---
+- name: installation des pkgs
+  apt:
+    name: 
+      - postgresql
+    state: present
+    update_cache: yes
+
+- name: création groupe cytech_grp
+  group:
+    name: cytech_grp
+    state: present
+
+- name: création utilisateur cytech_usr attribué au groupe cytech_grp
+  user:
+    name: cytech_usr
+    groups: cytech_grp
+    state: present
+
+- name: démarrage PostgreSQL
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: création utilisateur cytech_usr pour PostgreSQL
+  become_user: postgres
+  postgresql_user:
+    name: cytech_usr
+    role_attr_flags: CREATEDB
+
+- name: création base de données
+  become_user: postgres
+  postgresql_db:
+    name: cytech
+    owner: cytech_usr
