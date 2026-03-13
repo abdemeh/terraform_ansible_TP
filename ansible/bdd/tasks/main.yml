@@ -37,3 +37,15 @@
   postgresql_db:
     name: cytech
     owner: cytech_usr
+
+- name: création de la table cytech_usr
+  become_user: postgres
+  postgresql_query:
+    db: cytech
+    query: |
+      CREATE TABLE IF NOT EXISTS cytech_usr (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(50) NOT NULL
+      );
+      INSERT INTO cytech_usr (name) VALUES ('Abdellatif EL MAHDAOUI');
+
