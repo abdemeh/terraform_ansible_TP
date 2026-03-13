@@ -38,6 +38,35 @@
     name: cytech
     owner: cytech_usr
 
+- name: configuration postgresql.conf pour écouter toutes les adresses
+  lineinfile:
+    path: /etc/postgresql/14/main/postgresql.conf 
+    line: "listen_addresses = '*'"
+  notify: Restart PostgreSQL
+
+
+- name: autorisation de machine APP
+  become_user: postgres
+  postgresql_pg_hba:
+    dest: /etc/postgresql/14/main/pg_hba.conf
+    contype: host
+    users: cytech_usr
+    databases: cytech
+    method: trust
+    source: "{{ hostvars['app_node']['ansible_host'] }}/32"
+  notify: Restart PostgreSQL
+
+- name: autorisation de localhost
+  become_user: postgres
+  postgresql_pg_hba:
+    dest: /etc/postgresql/14/main/pg_hba.conf
+    contype: host
+    users: cytech_usr
+    databases: cytech
+    method: trust
+    source: "127.0.0.1/32"
+  notify: Restart PostgreSQL
+
 - name: création de la table cytech_usr
   become_user: postgres
   postgresql_query:
